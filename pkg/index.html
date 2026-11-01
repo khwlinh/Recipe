@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sổ Công Thức Bâng Quơ</title>
+<meta name="theme-color" content="#2a2218">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sổ Bâng Quơ">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#d9c7a3;--ink:#3b2f22;--paper:#f7edcf;--line:#c7d3e6;--red:#c4493a;--green:#4d6b3a;--soft:#8a7556;--chip:#ecdcae;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a2218;--ink:#3b2f22;--soft:#8a7556}}
+:root[data-theme="dark"]{--bg:#2a2218}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);font-family:'Itim','Comic Sans MS',cursive,sans-serif;color:var(--ink);min-height:100vh;
+background-image:radial-gradient(rgba(0,0,0,.07) 1px,transparent 1px);background-size:14px 14px}
+.wrap{max-width:540px;margin:0 auto;padding:14px 14px 96px}
+h1{margin:6px 4px 2px;font-size:26px;color:#f7edcf;text-shadow:1px 2px 0 rgba(0,0,0,.3);transform:rotate(-1deg)}
+.sub{margin:0 4px 14px;color:#e9dcb8;font-size:14px}
+.paper{position:relative;background:var(--paper);border-radius:3px;padding:18px 16px 16px 16px;box-shadow:0 6px 0 rgba(0,0,0,.12),0 12px 24px rgba(0,0,0,.25);transform:rotate(.6deg);
+clip-path:polygon(0 1%,3% 0,7% 1.2%,12% 0,19% 1%,27% 0,36% 1.2%,45% 0,55% 1%,64% 0,73% 1.2%,82% 0,91% 1%,100% 0,100% 100%,0 100%)}
+.paper:before{content:"";position:absolute;left:34px;top:0;bottom:0;width:2px;background:rgba(196,73,58,.45)}
+.paper:after{content:"";position:absolute;right:26px;bottom:60px;width:70px;height:70px;border-radius:50%;border:5px solid rgba(120,70,30,.1);pointer-events:none}
+.stamp{position:absolute;right:10px;top:8px;border:2px solid var(--red);color:var(--red);padding:1px 8px;font-size:13px;letter-spacing:1px;transform:rotate(8deg);opacity:.75;border-radius:3px}
+textarea,input[type=text]{width:100%;border:0;outline:0;background:transparent;font:inherit;color:var(--ink);font-size:18px;line-height:32px;padding:0 0 0 30px;resize:none}
+textarea{min-height:224px;background-image:linear-gradient(transparent 31px,var(--line) 31px);background-size:100% 32px;background-attachment:local}
+textarea::placeholder,input::placeholder{color:#a8967a}
+.first-hint{font-size:13px;color:var(--soft);padding-left:30px;margin:6px 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding-left:30px;margin:8px 0}
+.chip{background:var(--chip);border:1px dashed #b39a62;border-radius:14px;padding:2px 10px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--ink)}
+.chip.on{background:var(--green);color:#fff;border-color:var(--green)}
+.row{display:flex;gap:8px;padding-left:30px;margin-top:10px;flex-wrap:wrap}
+.btn{font:inherit;font-size:16px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:8px;padding:6px 14px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.sm{font-size:14px;padding:3px 10px}
+.tips{margin:6px 0 0 30px;padding:8px 10px;background:rgba(255,255,255,.45);border-radius:6px;font-size:14px}
+.tips b{color:var(--green)}
+.tips li{margin:3px 0}
+.nag{background:#fff4c2;border:2px dashed var(--red);border-radius:8px;padding:10px 12px;margin-bottom:14px;transform:rotate(-.6deg);box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.nag p{margin:0 0 8px;font-size:16px}
+.card{background:var(--paper);border-radius:4px;padding:12px 14px 12px 30px;margin-bottom:12px;position:relative;box-shadow:0 3px 0 rgba(0,0,0,.15);background-image:linear-gradient(transparent 27px,var(--line) 27px);background-size:100% 28px}
+.card:before{content:"";position:absolute;left:20px;top:0;bottom:0;width:2px;background:rgba(196,73,58,.4)}
+.card h3{margin:0;font-size:19px;line-height:28px;cursor:pointer}
+.meta{font-size:13px;color:var(--soft);line-height:28px}
+.done{color:var(--green)}
+.body{white-space:pre-wrap;line-height:28px;font-size:16px;margin:4px 0}
+.card .chips{padding-left:0}
+.empty{color:#e9dcb8;text-align:center;padding:30px 10px}
+.miss{font-size:13px;color:var(--red)}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(42,34,24,.92)}
+nav button{font:inherit;font-size:16px;flex:1;max-width:170px;border:2px solid #f7edcf;background:transparent;color:#f7edcf;border-radius:10px;padding:7px 4px;cursor:pointer}
+nav button.on{background:#f7edcf;color:#3b2f22}
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:20px;font-size:15px;opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.show{opacity:1}
+.hide{display:none}
+details summary{cursor:pointer;font-size:15px;color:var(--green)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Sổ Công Thức Bâng Quơ</h1>
+  <p class="sub">Ghi liền tên món, xuống dòng là lưu. Khỏi nhớ, khỏi sợ.</p>
+  <div id="nag"></div>
+
+  <section id="t-note">
+    <div class="paper">
+      <span class="stamp">MỚI TRỘM</span>
+      <textarea id="note" spellcheck="false" placeholder="Tên món (dòng đầu)&#10;xuống dòng: nguyên liệu, các bước...&#10;ví dụ: gà kho gừng&#10;gà, gừng, nước mắm, 25 phút"></textarea>
+      <p class="first-hint">Dòng đầu = tên món. Ctrl/⌘ + Enter để lưu nhanh.</p>
+      <div id="live"></div>
+      <div class="row">
+        <button class="btn" id="saveBtn">Lưu nhanh</button>
+        <button class="btn ghost" id="clearBtn">Xóa trắng</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="t-book" class="hide">
+    <div class="row" style="padding-left:0;margin:0 0 12px">
+      <button class="btn sm ghost" id="exportBtn" style="background:#f7edcf">⬇ Xuất sổ</button>
+      <label class="btn sm ghost" style="background:#f7edcf;cursor:pointer">⬆ Nhập sổ<input type="file" id="importFile" accept="application/json,.json" hidden></label>
+    </div>
+    <div id="book"></div></section>
+
+  <section id="t-fridge" class="hide">
+    <div class="paper">
+      <span class="stamp">TỦ LẠNH</span>
+      <input type="text" id="fridge" placeholder="Trong tủ có: gà, gừng, trứng...">
+      <p class="first-hint">Gõ nguyên liệu, cách nhau dấu phẩy. Hoặc bấm gợi ý:</p>
+      <div class="chips" id="quick"></div>
+    </div>
+    <div id="results" style="margin-top:16px"></div>
+  </section>
+</div>
+
+<nav>
+  <button data-tab="note" class="on">✍️ Ghi</button>
+  <button data-tab="book">📒 Sổ <span id="cnt"></span></button>
+  <button data-tab="fridge">🧊 Tủ lạnh</button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+const DAY=864e5;
+// [tên nhận diện, nhãn, cách sơ chế]
+const ING=[
+[["hành lá"],"Hành lá","Nhặt lá úa, rửa sạch, cắt bỏ rễ. Tách phần trắng (phi thơm) và phần xanh (rắc cuối)."],
+[["hành tây"],"Hành tây","Cắt bỏ hai đầu, lột vỏ. Ngâm nước lạnh 10 phút cho đỡ cay mắt."],
+[["hành tím","hành khô","phi hành"],"Hành tím","Lột vỏ, rửa, băm nhỏ hoặc thái lát mỏng rồi phi vàng."],
+[["hành"],"Hành","Lột vỏ, rửa sạch, thái theo ý công thức."],
+[["tỏi"],"Tỏi","Đập dập, lột vỏ rồi băm nhỏ. Phi vừa vàng thôi, cháy là đắng."],
+[["gừng"],"Gừng","Nạo vỏ bằng cái muỗng, rửa sạch, đập dập hoặc thái sợi."],
+[["sả"],"Sả","Bóc bẹ già bên ngoài, đập dập phần gốc, cắt khúc hoặc băm nhỏ."],
+[["ớt"],"Ớt","Rửa, cắt cuống. Sợ cay thì bỏ hạt."],
+[["thịt gà","gà"],"Gà","Chà muối + gừng, rửa lại nhiều nước, chần nước sôi 1 phút cho hết mùi hôi."],
+[["thịt heo","thịt lợn","ba chỉ","ba rọi","sườn","thịt xay"],"Thịt heo","Rửa nước muối loãng, chần sơ nước sôi có gừng rồi vớt ra rửa lại."],
+[["thịt bò","bò"],"Thịt bò","Cắt ngang thớ thịt. Ướp thêm chút đường + dầu ăn 15 phút cho mềm."],
+[["tôm"],"Tôm","Cắt râu, rút chỉ đen trên lưng, rửa với nước muối loãng."],
+[["mực"],"Mực","Bỏ mắt, mỏ, túi mực; lột da, rửa muối. Đừng nấu lâu, dai như cao su."],
+[["cá"],"Cá","Cạo vảy, bỏ ruột + mang, chà muối với chanh hoặc rượu trắng cho hết tanh."],
+[["trứng"],"Trứng","Đập ra chén trước rồi mới đổ vào chảo, khỏi dính vỏ. Đánh với chút nước mắm."],
+[["đậu hũ","đậu phụ"],"Đậu hũ","Xả nước, thấm khô bằng giấy bếp trước khi chiên để khỏi bắn dầu."],
+[["cà chua"],"Cà chua","Khía chữ thập ở đáy, chần nước sôi 30 giây rồi lột vỏ, cắt múi."],
+[["cà tím"],"Cà tím","Cắt xong ngâm nước muối loãng cho khỏi thâm, vắt ráo trước khi nấu."],
+[["cà rốt"],"Cà rốt","Gọt vỏ, rửa sạch, cắt khúc hoặc thái lát theo công thức."],
+[["khoai tây"],"Khoai tây","Gọt vỏ, khoét mầm xanh, ngâm nước lạnh cho khỏi thâm."],
+[["nấm"],"Nấm","Đừng ngâm nước lâu. Rửa nhanh, cắt bỏ chân, xé hoặc cắt miếng."],
+[["rau muống"],"Rau muống","Nhặt lá già, ngắt khúc, ngâm nước muối 10 phút rồi rửa lại."],
+[["rau cải","cải"],"Rau cải","Tách từng lá, rửa dưới vòi nước chảy, để ráo."],
+[["bí đao","bí"],"Bí","Gọt vỏ, bỏ ruột + hạt, rửa, cắt miếng vừa ăn."],
+[["mướp"],"Mướp","Gọt vỏ (chừa lại ít xanh cho đẹp), rửa, cắt xéo."],
+[["bún"],"Bún","Chần nước sôi, xả nước lạnh cho khỏi dính."],
+[["miến"],"Miến","Ngâm nước ấm 15 phút cho mềm, cắt ngắn rồi mới nấu."],
+[["bánh phở"],"Bánh phở","Chần nhanh nước sôi 10 giây, vớt ra để ráo. Chần lâu là nhũn."],
+[["mì"],"Mì","Luộc riêng, vớt ra xả nước lạnh. Đừng nấu chung nồi canh kẻo nhừ."],
+[["gạo"],"Gạo","Vo 2 đến 3 lần cho nước bớt đục. Đong nước theo tỉ lệ 1 gạo : 1,2 nước."],
+[["đậu xanh","đậu đỏ","đậu đen"],"Đậu hạt","Ngâm nước 4 đến 6 tiếng (hoặc qua đêm) cho mau mềm."],
+[["đậu cove","đậu que"],"Đậu cove","Ngắt hai đầu, tước xơ hai bên, rửa rồi cắt khúc."],
+[["đậu bắp"],"Đậu bắp","Rửa, cắt cuống, để nguyên trái hoặc cắt khúc. Đừng cắt nhỏ quá kẻo nhớt."],
+[["đậu hà lan"],"Đậu hà lan","Ngắt hai đầu, tước xơ dọc hai bên, rửa sạch."],
+[["giá đỗ","giá"],"Giá đỗ","Rửa nước lạnh, nhặt vỏ, để ráo. Xào lửa lớn thật nhanh cho giòn."],
+[["ngò rí","rau mùi","ngò"],"Ngò rí","Ngắt bỏ rễ, rửa sạch, để ráo, cắt nhỏ rắc lên cuối cùng."],
+[["ngò gai"],"Ngò gai","Ngắt lá, rửa sạch, xắt nhỏ. Cho vào sau khi tắt bếp."],
+[["húng quế"],"Húng quế","Ngắt lá, rửa nhẹ, để ráo. Cho vào cuối cùng kẻo thâm và mất mùi."],
+[["tía tô"],"Tía tô","Ngắt lá, rửa sạch, cuộn lại rồi thái sợi nhỏ."],
+[["rau răm"],"Rau răm","Ngắt bỏ cọng già, rửa sạch, để ráo, cắt nhỏ."],
+[["rau thơm"],"Rau thơm","Nhặt lá úa, rửa sạch, để ráo rồi mới cắt nhỏ."],
+[["rau ngót"],"Rau ngót","Tuốt lấy lá, bỏ cọng già, rửa sạch, vò nhẹ cho dễ ra vị ngọt."],
+[["mồng tơi"],"Mồng tơi","Tuốt lá, bỏ cọng già, rửa sạch. Nấu canh thì cho vào sau cùng."],
+[["rau dền"],"Rau dền","Nhặt lá, bỏ gốc già, rửa nhiều nước vì hay dính đất."],
+[["cải thảo"],"Cải thảo","Tách từng lá, rửa sạch, cắt khúc. Phần gốc trắng cho vào nấu trước."],
+[["bắp cải"],"Bắp cải","Bóc bỏ lá ngoài, cắt bỏ lõi, thái sợi hoặc xé miếng rồi rửa."],
+[["súp lơ","bông cải"],"Súp lơ","Cắt từng cụm nhỏ, ngâm nước muối 10 phút, rửa lại rồi chần sơ."],
+[["dưa leo","dưa chuột"],"Dưa leo","Rửa, cắt hai đầu, chà đầu cuống cho bớt đắng. Thái lát hoặc bổ dọc."],
+[["bí đỏ"],"Bí đỏ","Bổ đôi, bỏ ruột + hạt, gọt vỏ (vỏ cứng, cẩn thận tay), cắt miếng."],
+[["su su"],"Su su","Gọt vỏ dưới vòi nước (có nhựa dính tay), bỏ lõi, cắt miếng hoặc sợi."],
+[["su hào"],"Su hào","Gọt bỏ lớp vỏ dày, rửa, thái miếng hoặc sợi."],
+[["củ cải"],"Củ cải","Gọt vỏ, rửa, cắt khúc. Ngâm nước gạo hoặc nước muối cho bớt hăng."],
+[["khoai lang"],"Khoai lang","Rửa sạch, gọt vỏ, cắt khúc. Ngâm nước để khỏi thâm."],
+[["khoai môn"],"Khoai môn","Đeo găng khi gọt vì dễ ngứa tay. Gọt vỏ, rửa, cắt miếng."],
+[["măng"],"Măng","Luộc 2 lần, thay nước mới cho hết đắng và hôi, rồi thái."],
+[["ngô","bắp ngô"],"Ngô","Bóc vỏ, tước râu, rửa. Cắt khúc hoặc tuốt hạt bằng dao."],
+[["ớt chuông"],"Ớt chuông","Bổ đôi, bỏ ruột + hạt, rửa, cắt miếng hoặc sợi."],
+[["chanh"],"Chanh","Rửa vỏ, bổ đôi, vắt lấy nước, nhớ bỏ hạt kẻo bị đắng."],
+[["lá chanh"],"Lá chanh","Rửa sạch, bỏ cọng giữa, cuộn lại rồi thái sợi thật nhỏ."],
+[["nghệ"],"Nghệ","Cạo vỏ, rửa sạch, giã hoặc xay nhuyễn. Cẩn thận dính áo."],
+[["riềng"],"Riềng","Cạo vỏ, rửa, thái lát hoặc giã nhỏ."],
+[["tiêu"],"Tiêu","Tiêu hạt thì giã hoặc xay trước khi dùng. Rắc cuối cho thơm."],
+[["nước cốt dừa"],"Nước cốt dừa","Lắc đều hộp trước khi mở. Cho vào cuối, đun lửa nhỏ kẻo bị tách nước."],
+[["đậu phộng","lạc"],"Đậu phộng","Rang chín, bóc vỏ lụa, giã dập thô."],
+[["me"],"Me","Ngâm me với nước ấm, bóp nhuyễn, lọc bỏ hạt và xơ lấy nước."],
+[["nấm hương","nấm đông cô"],"Nấm hương","Ngâm nước ấm 20 phút cho nở, cắt bỏ chân cứng, giữ nước ngâm nấu canh."],
+[["nấm rơm"],"Nấm rơm","Cắt bỏ chân, bổ đôi, rửa nhanh nước muối rồi chần sơ."],
+[["nấm kim châm"],"Nấm kim châm","Cắt bỏ gốc, tách nhỏ, rửa nhanh. Nấu thật lẹ kẻo dai."],
+[["mộc nhĩ"],"Mộc nhĩ","Ngâm nước ấm 15 phút cho nở, cắt bỏ cuống cứng, thái sợi."],
+[["thịt vịt","vịt"],"Vịt","Chà muối + gừng + rượu trắng, rửa sạch. Chần sơ nước sôi cho hết hôi."],
+[["cá hồi"],"Cá hồi","Rửa, thấm khô bằng giấy bếp, nhặt xương bằng nhíp. Ướp muối + chanh 10 phút."],
+[["cua","ghẹ"],"Cua ghẹ","Chà rửa kỹ bằng bàn chải, bóc yếm, bỏ mang xám. Chặt miếng rồi nấu."],
+[["nghêu","ngao","sò","hến"],"Nghêu sò","Ngâm nước muối loãng (thêm vài lát ớt) 1 đến 2 tiếng cho nhả cát, rửa lại."],
+[["lươn"],"Lươn","Chà muối + giấm cho hết nhớt, rửa sạch rồi chần sơ. Nên mua loại đã làm sẵn."],
+[["xương heo","xương ống","xương"],"Xương","Chần nước sôi 3 phút, vớt ra rửa lại cho sạch bọt rồi mới hầm."],
+[["trứng cút"],"Trứng cút","Luộc 5 phút, ngâm nước lạnh rồi lăn nhẹ cho dễ bóc vỏ."]
+];
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
+const has=(t,n)=>new RegExp('(?<![\\p{L}])'+n+'(?![\\p{L}])','u').test(t);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function find(text){
+  const lo=text.toLowerCase(),nt=norm(text),out=[];
+  for(const it of ING){
+    if(it[0].some(n=>has(lo,n)||(n.length>=5&&has(nt,norm(n))))) out.push({names:it[0],label:it[1],tip:it[2]});
+  }
+  return out.filter(f=>!out.some(o=>o.label.startsWith(f.label+' ')));
+}
+function split(text){
+  const lines=text.split('\n').map(s=>s.trim());
+  const i=lines.findIndex(Boolean);
+  if(i<0) return {title:'',body:''};
+  return {title:lines[i],body:lines.slice(i+1).filter(Boolean).join('\n')};
+}
+
+const KEY='bq-recipes-v1';
+function seed(){
+  const t=Date.now()-3*DAY;
+  return [
+    {id:1,created:t,cooked:0,text:'Gà kho gừng\ngà 500g, gừng, hành tím, nước mắm, đường\nướp gà với nước mắm + đường 15 phút\nphi hành tím, cho gà vào xào săn\nthêm gừng + nước, kho lửa nhỏ 25 phút'},
+    {id:2,created:t+DAY,cooked:0,text:'Trứng chiên cà chua\ntrứng, cà chua, hành lá\nxào cà chua cho mềm\nđổ trứng đã đánh vào, rắc hành lá'},
+    {id:3,created:t+2*DAY,cooked:1,lastCooked:Date.now()-DAY,text:'Canh bí đao tôm\ntôm, bí đao, hành lá\nxào tôm cho thơm\nthêm nước, cho bí vào nấu 10 phút'}
+  ];
+}
+let R=(()=>{try{const v=JSON.parse(localStorage.getItem(KEY));if(Array.isArray(v))return v}catch(e){}return seed()})();
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(R))}catch(e){}};
+let editId=null;
+
+const $=s=>document.querySelector(s);
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function tab(n){
+  for(const k of ['note','book','fridge']) $('#t-'+k).classList.toggle('hide',k!==n);
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===n));
+  if(n==='book') renderBook(); if(n==='fridge') renderFridge();
+  scrollTo(0,0);
+}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+
+/* Nhắc nấu */
+function renderNag(){
+  const now=Date.now();
+  const r=R.filter(x=>!x.cooked&&now-x.created>DAY&&(!x.snooze||x.snooze<now)).sort((a,b)=>a.created-b.created)[0];
+  const el=$('#nag');
+  if(!r){el.innerHTML='';return}
+  const d=Math.floor((now-r.created)/DAY);
+  el.innerHTML='<div class="nag"><p>🍳 “'+esc(split(r.text).title)+'” lưu '+d+' ngày rồi. Lưu công thức rồi có nấu không pà?</p>'+
+  '<button class="btn sm" data-act="cooked" data-id="'+r.id+'">Nấu rồi ✓</button> '+
+  '<button class="btn sm ghost" data-act="snooze" data-id="'+r.id+'">Chưa, mai nấu</button></div>';
+}
+
+/* Ghi nhanh */
+function live(){
+  const v=$('#note').value,{title,body}=split(v),f=find(v);
+  let h='';
+  if(f.length){
+    h='<div class="chips">'+f.map(i=>'<span class="chip">'+esc(i.label)+'</span>').join('')+'</div>'+
+    '<ul class="tips">'+f.map(i=>'<li><b>'+esc(i.label)+':</b> '+esc(i.tip)+'</li>').join('')+'</ul>';
+  } else if(title) h='<p class="first-hint">Chưa thấy nguyên liệu quen. Cứ ghi thêm bên dưới nhé.</p>';
+  $('#live').innerHTML=h;
+}
+$('#note').addEventListener('input',live);
+$('#note').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();saveNote()}});
+function saveNote(){
+  const v=$('#note').value.trim();
+  if(!split(v).title){toast('Ghi tên món trước đã nha');return}
+  if(editId){const r=R.find(x=>x.id===editId);if(r)r.text=v;editId=null}
+  else R.unshift({id:Date.now(),created:Date.now(),cooked:0,text:v});
+  persist();$('#note').value='';live();updateCount();renderNag();toast('Đã lưu vào sổ ✓');
+}
+$('#saveBtn').onclick=saveNote;
+$('#clearBtn').onclick=()=>{$('#note').value='';editId=null;live()};
+
+/* Sổ */
+function recipeCard(r,extra){
+  const {title,body}=split(r.text),f=find(r.text);
+  const st=r.cooked?'<span class="done">✓ đã nấu '+r.cooked+' lần</span>':'chưa nấu lần nào';
+  return '<div class="card"><h3 data-act="toggle" data-id="'+r.id+'">'+esc(title)+'</h3>'+
+  '<div class="meta">'+st+(extra||'')+'</div>'+
+  '<div class="chips">'+f.map(i=>'<span class="chip">'+esc(i.label)+'</span>').join('')+'</div>'+
+  '<div class="hide" id="d'+r.id+'"><div class="body">'+esc(body)+'</div>'+
+  (f.length?'<details open><summary>Sơ chế cho đứa khù khờ</summary><ul class="tips" style="margin-left:0">'+f.map(i=>'<li><b>'+esc(i.label)+':</b> '+esc(i.tip)+'</li>').join('')+'</ul></details>':'')+
+  '<div class="row" style="padding-left:0"><button class="btn sm" data-act="cooked" data-id="'+r.id+'">Mới nấu ✓</button>'+
+  '<button class="btn sm ghost" data-act="edit" data-id="'+r.id+'">Sửa</button>'+
+  '<button class="btn sm ghost" data-act="del" data-id="'+r.id+'">Xóa</button></div></div></div>';
+}
+function renderBook(){
+  $('#book').innerHTML=R.length?R.map(r=>recipeCard(r)).join(''):'<p class="empty">Sổ trống trơn. Qua tab Ghi viết món đầu tiên đi.</p>';
+}
+const updateCount=()=>{$('#cnt').textContent=R.length?'('+R.length+')':''};
+
+/* Tủ lạnh */
+function renderFridge(){
+  const q=$('#fridge').value,tokens=q.split(/[,;\n]/).map(s=>norm(s.trim())).filter(Boolean);
+  const qc=$('#quick');
+  if(!qc.children.length) qc.innerHTML=ING.filter(i=>i[1]!=='Hành').slice(0,24).map(i=>'<button class="chip" data-add="'+esc(i[0][0])+'">'+esc(i[1])+'</button>').join('');
+  qc.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',tokens.includes(norm(c.dataset.add))));
+  const box=$('#results');
+  if(!tokens.length){box.innerHTML='<p class="empty">Nhập vài nguyên liệu, tui gợi ý món gần nhất.</p>';return}
+  const res=R.map(r=>{
+    const nt=norm(r.text),f=find(r.text);
+    const hit=tokens.filter(t=>nt.includes(t)).length;
+    const miss=f.filter(i=>!tokens.some(t=>i.names.some(n=>norm(n).includes(t)||t.includes(norm(n)))));
+    return {r,hit,miss,total:f.length};
+  }).filter(x=>x.hit>0).sort((a,b)=>b.hit-a.hit||a.miss.length-b.miss.length);
+  box.innerHTML=res.length?res.map(x=>recipeCard(x.r,x.miss.length?'<br><span class="miss">thiếu: '+esc(x.miss.map(m=>m.label).join(', '))+'</span>':'<br><span class="done">đủ nguyên liệu, nấu liền!</span>')).join(''):'<p class="empty">Chưa có món nào hợp. Qua tab Ghi thêm món mới nha.</p>';
+}
+$('#fridge').addEventListener('input',renderFridge);
+$('#quick').addEventListener('click',e=>{
+  const a=e.target.dataset.add;if(!a)return;
+  const inp=$('#fridge'),list=inp.value.split(/[,;]/).map(s=>s.trim()).filter(Boolean),i=list.findIndex(s=>norm(s)===norm(a));
+  if(i>=0)list.splice(i,1);else list.push(a);
+  inp.value=list.join(', ');renderFridge();
+});
+
+/* Hành động chung */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const id=+b.dataset.id,r=R.find(x=>x.id===id),a=b.dataset.act;
+  if(a==='toggle'){const d=$('#d'+id);if(d)d.classList.toggle('hide');return}
+  if(!r)return;
+  if(a==='cooked'){r.cooked=(r.cooked||0)+1;r.lastCooked=Date.now();toast('Giỏi quá, ghi nhận ✓')}
+  if(a==='snooze'){r.snooze=Date.now()+DAY;toast('Ok, mai nhắc lại')}
+  if(a==='del'){if(!confirm('Xóa món này khỏi sổ?'))return;R=R.filter(x=>x.id!==id)}
+  if(a==='edit'){$('#note').value=r.text;editId=id;tab('note');live();$('#note').focus();return}
+  persist();renderNag();updateCount();
+  if(!$('#t-book').classList.contains('hide'))renderBook();
+  if(!$('#t-fridge').classList.contains('hide'))renderFridge();
+});
+
+$('#exportBtn').onclick=()=>{const b=new Blob([JSON.stringify(R,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='so-cong-thuc.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+$('#importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const v=JSON.parse(t);if(!Array.isArray(v))throw 0;const ids=new Set(R.map(x=>x.id));let n=0;v.forEach(x=>{if(x&&typeof x.text==='string'&&!ids.has(x.id)){R.push({id:x.id||Date.now()+n,created:x.created||Date.now(),cooked:x.cooked||0,lastCooked:x.lastCooked,text:x.text});n++}});persist();renderBook();updateCount();renderNag();toast('Đã nhập '+n+' món')}catch(err){toast('File không đúng định dạng')}});e.target.value=''};
+updateCount();renderNag();live();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
