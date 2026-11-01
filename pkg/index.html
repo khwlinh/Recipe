@@ -62,6 +62,11 @@ nav button.on{background:#f7edcf;color:#3b2f22}
 .toast.show{opacity:1}
 .hide{display:none}
 details summary{cursor:pointer;font-size:15px;color:var(--green)}
+.mine{background:#fff4c2;border-radius:6px;padding:2px 8px;margin:3px 0;font-size:14px}
+.std{color:#6b5a40;font-size:13px;margin:2px 0}
+.lnk{font:inherit;font-size:13px;background:none;border:0;color:var(--green);text-decoration:underline;cursor:pointer;padding:0}
+.ed{margin:6px 0 8px}
+.ed textarea{min-height:60px;background:#fff;background-image:none;border:1px solid #b39a62;border-radius:6px;padding:4px 8px;line-height:22px;font-size:15px}
 </style>
 </head>
 <body>
@@ -230,6 +235,46 @@ function tab(n){
 }
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
 
+/* Ghi chú sơ chế riêng + gợi ý theo kiểu món */
+const TKEY='bq-mytips-v1';
+let T=(()=>{try{const v=JSON.parse(localStorage.getItem(TKEY));if(v&&typeof v==='object'&&!Array.isArray(v))return v}catch(e){}return {}})();
+const persistT=()=>{try{localStorage.setItem(TKEY,JSON.stringify(T))}catch(e){}};
+const OPEN=new Set();
+const CAT={meat:['Gà','Thịt heo','Thịt bò','Vịt','Xương'],sea:['Tôm','Mực','Cá','Cá hồi','Cua ghẹ','Nghêu sò','Lươn'],
+veg:['Cà chua','Cà tím','Cà rốt','Khoai tây','Rau muống','Rau cải','Bí','Mướp','Giá đỗ','Cải thảo','Bắp cải','Súp lơ','Dưa leo','Bí đỏ','Su su','Su hào','Củ cải','Khoai lang','Khoai môn','Măng','Ngô','Ớt chuông','Đậu cove','Đậu bắp','Đậu hà lan','Rau ngót','Mồng tơi','Rau dền','Nấm','Nấm hương','Nấm rơm','Nấm kim châm','Hành tây']};
+const cat=l=>Object.keys(CAT).find(k=>CAT[k].includes(l));
+const METHODS=[['kho',['kho','rim']],['chiên',['chiên','rán']],['xào',['xào']],['canh',['canh','súp','lẩu']],['luộc',['luộc','hấp']],['nướng',['nướng']],['gỏi',['gỏi','trộn','nộm']]];
+const HINT={
+kho:{meat:'Cắt miếng vừa ăn, ướp nước mắm + đường 15 phút cho thấm rồi mới kho.',sea:'Để nguyên khúc, ướp tiêu + chút nước màu. Kho lửa nhỏ, đừng khuấy kẻo nát.'},
+chiên:{meat:'Thấm thật khô, ướp muối tiêu. Chảo nóng dầu mới thả vào để khỏi dính.',sea:'Thấm thật khô, lăn qua chút bột cho vỏ giòn. Mỗi mặt vàng rồi mới lật.',veg:'Cắt đều tay cho chín cùng lúc, thấm khô trước khi cho vào chảo.'},
+xào:{meat:'Cắt mỏng, ướp 10 phút. Xào lửa lớn, chia nhiều lần cho khỏi ra nước.',sea:'Xào nhanh lửa lớn, vừa chín tới là tắt bếp.',veg:'Cắt đều, để thật ráo nước, xào lửa lớn nhanh tay cho giòn.'},
+canh:{meat:'Chần sơ rồi mới nấu để nước canh trong, ít bọt.',sea:'Cho vào khi nước đã sôi, nấu vừa chín là tắt.',veg:'Cắt miếng vừa ăn. Rau lá cho vào cuối cùng để giữ màu xanh.'},
+luộc:{meat:'Cho cả miếng vào nước có gừng + muối. Chín thì ngâm nước đá cho da giòn.',sea:'Hấp hoặc luộc với gừng, sả; đổi màu là vừa, đừng để lâu.',veg:'Nước sôi mới cho rau, thêm chút muối cho xanh.'},
+nướng:{meat:'Ướp ít nhất 30 phút, để ra ngoài 15 phút cho hết lạnh rồi mới nướng.',sea:'Quét ít dầu, ướp muối tiêu, chỉ lật một lần.',veg:'Cắt dày, quét dầu, nướng tới khi viền hơi cháy xém.'},
+gỏi:{meat:'Luộc chín, để nguội rồi xé hoặc thái mỏng.',veg:'Rửa kỹ, ngâm nước đá cho giòn, để thật ráo mới trộn.'}};
+function getMethod(text){
+  const tl=split(text).title.toLowerCase(),bl=text.toLowerCase();
+  for(const src of [tl,bl]) for(const m of METHODS) if(m[1].some(w=>has(src,w))) return m[0];
+  return null;
+}
+function tipsHTML(f,r,text){
+  const m=getMethod(text);
+  return f.map(i=>{
+    const dish=r&&r.prep&&r.prep[i.label],mine=T[i.label],h=m&&HINT[m]&&HINT[m][cat(i.label)];
+    let s='<li><b>'+esc(i.label)+':</b> '+esc(i.tip);
+    if(h)s+='<div class="std">💡 Món '+m+': '+esc(h)+'</div>';
+    if(mine)s+='<div class="mine">⭐ Của tui: '+esc(mine)+'</div>';
+    if(dish)s+='<div class="mine">📌 Món này: '+esc(dish)+'</div>';
+    if(r){const d='data-id="'+r.id+'" data-ing="'+esc(i.label)+'"';
+      s+='<button class="lnk" data-act="ptip" '+d+'>✎ ghi chú riêng</button>'+
+      '<div class="ed hide"><textarea placeholder="Cách sơ chế theo ý bạn..." spellcheck="false">'+esc(dish||mine||'')+'</textarea>'+
+      '<div class="row" style="padding-left:0"><button class="btn sm" data-act="pdish" '+d+'>Lưu cho món này</button><button class="btn sm ghost" data-act="pall" '+d+'>Lưu cho mọi món</button></div>'+
+      '<div class="std">Để trống rồi bấm lưu = xóa ghi chú đó.</div></div>';}
+    return s+'</li>';
+  }).join('');
+}
+const redraw=()=>{renderNag();if(!$('#t-book').classList.contains('hide'))renderBook();if(!$('#t-fridge').classList.contains('hide'))renderFridge();live()};
+
 /* Nhắc nấu */
 function renderNag(){
   const now=Date.now();
@@ -248,7 +293,7 @@ function live(){
   let h='';
   if(f.length){
     h='<div class="chips">'+f.map(i=>'<span class="chip">'+esc(i.label)+'</span>').join('')+'</div>'+
-    '<ul class="tips">'+f.map(i=>'<li><b>'+esc(i.label)+':</b> '+esc(i.tip)+'</li>').join('')+'</ul>';
+    '<ul class="tips">'+tipsHTML(f,null,v)+'</ul>';
   } else if(title) h='<p class="first-hint">Chưa thấy nguyên liệu quen. Cứ ghi thêm bên dưới nhé.</p>';
   $('#live').innerHTML=h;
 }
@@ -271,8 +316,8 @@ function recipeCard(r,extra){
   return '<div class="card"><h3 data-act="toggle" data-id="'+r.id+'">'+esc(title)+'</h3>'+
   '<div class="meta">'+st+(extra||'')+'</div>'+
   '<div class="chips">'+f.map(i=>'<span class="chip">'+esc(i.label)+'</span>').join('')+'</div>'+
-  '<div class="hide" id="d'+r.id+'"><div class="body">'+esc(body)+'</div>'+
-  (f.length?'<details open><summary>Sơ chế cho đứa khù khờ</summary><ul class="tips" style="margin-left:0">'+f.map(i=>'<li><b>'+esc(i.label)+':</b> '+esc(i.tip)+'</li>').join('')+'</ul></details>':'')+
+  '<div class="dt'+(OPEN.has(r.id)?'':' hide')+'"><div class="body">'+esc(body)+'</div>'+
+  (f.length?'<details open><summary>Sơ chế cho đứa khù khờ</summary><ul class="tips" style="margin-left:0">'+tipsHTML(f,r,r.text)+'</ul></details>':'')+
   '<div class="row" style="padding-left:0"><button class="btn sm" data-act="cooked" data-id="'+r.id+'">Mới nấu ✓</button>'+
   '<button class="btn sm ghost" data-act="edit" data-id="'+r.id+'">Sửa</button>'+
   '<button class="btn sm ghost" data-act="del" data-id="'+r.id+'">Xóa</button></div></div></div>';
@@ -310,8 +355,14 @@ $('#quick').addEventListener('click',e=>{
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]');if(!b)return;
   const id=+b.dataset.id,r=R.find(x=>x.id===id),a=b.dataset.act;
-  if(a==='toggle'){const d=$('#d'+id);if(d)d.classList.toggle('hide');return}
+  if(a==='toggle'){const c=b.closest('.card'),d=c&&c.querySelector('.dt');if(d){d.classList.toggle('hide');if(d.classList.contains('hide'))OPEN.delete(id);else OPEN.add(id)}return}
   if(!r)return;
+  if(a==='ptip'){const ed=b.closest('li').querySelector('.ed');ed.classList.toggle('hide');if(!ed.classList.contains('hide'))ed.querySelector('textarea').focus();return}
+  if(a==='pdish'||a==='pall'){
+    const ing=b.dataset.ing,txt=b.closest('.ed').querySelector('textarea').value.trim();
+    if(a==='pdish'){r.prep=r.prep||{};if(txt)r.prep[ing]=txt;else delete r.prep[ing];persist()}
+    else{if(txt)T[ing]=txt;else delete T[ing];persistT()}
+    redraw();toast(txt?'Đã lưu ghi chú ✓':'Đã xóa ghi chú');return}
   if(a==='cooked'){r.cooked=(r.cooked||0)+1;r.lastCooked=Date.now();toast('Giỏi quá, ghi nhận ✓')}
   if(a==='snooze'){r.snooze=Date.now()+DAY;toast('Ok, mai nhắc lại')}
   if(a==='del'){if(!confirm('Xóa món này khỏi sổ?'))return;R=R.filter(x=>x.id!==id)}
@@ -321,8 +372,8 @@ document.addEventListener('click',e=>{
   if(!$('#t-fridge').classList.contains('hide'))renderFridge();
 });
 
-$('#exportBtn').onclick=()=>{const b=new Blob([JSON.stringify(R,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='so-cong-thuc.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
-$('#importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const v=JSON.parse(t);if(!Array.isArray(v))throw 0;const ids=new Set(R.map(x=>x.id));let n=0;v.forEach(x=>{if(x&&typeof x.text==='string'&&!ids.has(x.id)){R.push({id:x.id||Date.now()+n,created:x.created||Date.now(),cooked:x.cooked||0,lastCooked:x.lastCooked,text:x.text});n++}});persist();renderBook();updateCount();renderNag();toast('Đã nhập '+n+' món')}catch(err){toast('File không đúng định dạng')}});e.target.value=''};
+$('#exportBtn').onclick=()=>{const b=new Blob([JSON.stringify({recipes:R,tips:T},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='so-cong-thuc.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+$('#importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const o=JSON.parse(t),v=Array.isArray(o)?o:o.recipes;if(!Array.isArray(v))throw 0;if(o.tips&&typeof o.tips==='object'){Object.keys(o.tips).forEach(k=>{if(!T[k]&&typeof o.tips[k]==='string')T[k]=o.tips[k]});persistT()}const ids=new Set(R.map(x=>x.id));let n=0;v.forEach(x=>{if(x&&typeof x.text==='string'&&!ids.has(x.id)){R.push({id:x.id||Date.now()+n,created:x.created||Date.now(),cooked:x.cooked||0,lastCooked:x.lastCooked,prep:(x.prep&&typeof x.prep==='object')?x.prep:undefined,text:x.text});n++}});persist();renderBook();updateCount();renderNag();toast('Đã nhập '+n+' món')}catch(err){toast('File không đúng định dạng')}});e.target.value=''};
 updateCount();renderNag();live();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>

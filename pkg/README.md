@@ -18,6 +18,14 @@ App web cài được lên điện thoại (PWA), chạy offline. Dữ liệu l�
 - **iPhone (Safari):** mở link, bấm Chia sẻ, chọn *Thêm vào MH chính*.
 - **Android (Chrome):** mở link, bấm ⋮, chọn *Cài đặt ứng dụng* hoặc *Thêm vào màn hình chính*.
 
+## Ghi chú sơ chế riêng
+
+Mở một món trong tab **Sổ**, bấm *✎ ghi chú riêng* dưới từng nguyên liệu:
+- **Lưu cho món này**: chỉ hiện ở món đó (ví dụ gà kho: chặt miếng vừa, bỏ da).
+- **Lưu cho mọi món**: hiện mỗi khi nguyên liệu đó xuất hiện, kể cả lúc đang ghi món mới.
+
+App cũng gợi ý thêm theo kiểu món (kho, chiên, xào, canh, luộc/hấp, nướng, gỏi) dựa vào tên món.
+
 ## Sao lưu sổ
 
 Tab **Sổ** có nút **Xuất sổ** (tải file `.json`) và **Nhập sổ** để chuyển sang máy khác.

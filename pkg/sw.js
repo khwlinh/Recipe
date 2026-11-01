@@ -1,4 +1,4 @@
-const CACHE = 'so-cong-thuc-v1'; // đổi số khi cập nhật app để máy lấy bản mới
+const CACHE = 'so-cong-thuc-v2'; // đổi số khi cập nhật app để máy lấy bản mới
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
